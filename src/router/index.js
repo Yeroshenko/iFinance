@@ -1,14 +1,44 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/login',
+    name: 'Login',
+    meta: { layout: 'empty' },
+    component: () => import('@/views/Login.vue')
+  },
+  {
     path: '/',
     name: 'Home',
-    component: Home
+    meta: { layout: 'main' },
+    component: () => import('@/views/Home.vue')
+  },
+  {
+    path: '/history',
+    name: 'History',
+    meta: { layout: 'main' },
+    component: () => import('@/views/History.vue')
+  },
+  {
+    path: '/planning',
+    name: 'Planning',
+    meta: { layout: 'main' },
+    component: () => import('@/views/Planning.vue')
+  },
+  {
+    path: '/record',
+    name: 'Record',
+    meta: { layout: 'main' },
+    component: () => import('@/views/Record.vue')
+  },
+  {
+    path: '/categories',
+    name: 'Record',
+    meta: { layout: 'main' },
+    component: () => import('@/views/Categories.vue')
   }
 ]
 
