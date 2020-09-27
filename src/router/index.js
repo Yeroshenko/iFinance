@@ -6,9 +6,10 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/login',
-    name: 'Login',
+    alias: '/register',
+    name: 'Auth',
     meta: { layout: 'empty' },
-    component: () => import('@/views/Login.vue')
+    component: () => import('@/views/Auth.vue')
   },
   {
     path: '/',
@@ -36,9 +37,15 @@ const routes = [
   },
   {
     path: '/categories',
-    name: 'Record',
+    name: 'Categories',
     meta: { layout: 'main' },
     component: () => import('@/views/Categories.vue')
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    meta: { layout: 'main' },
+    component: () => import('@/views/Profile.vue')
   }
 ]
 

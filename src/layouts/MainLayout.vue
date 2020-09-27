@@ -39,11 +39,21 @@
         </template>
         Категории
       </vs-sidebar-item>
-
+      <vs-sidebar-item id="profile" class="sidebar__item" to="/profile">
+        <template #icon>
+          <UserIcon class="svg-icon" />
+        </template>
+        Профиль
+      </vs-sidebar-item>
+      <!-- footer -->
       <template #footer>
         <div class="sidebar__footer">
-          <div class="sidebar__footer-time">02:10:35</div>
-          <vs-button danger size="large">
+          <vs-tooltip not-arrow>
+            <div class="sidebar__footer-time">{{ date | date('time') }}</div>
+            <template #tooltip>{{ date | date('date') }}</template>
+          </vs-tooltip>
+
+          <vs-button danger size="large" @click="logout">
             Выйти
           </vs-button>
         </div>
@@ -59,13 +69,33 @@ import HistoryIcon from '@/assets/icons/clock.svg'
 import PlanningIcon from '@/assets/icons/checklist.svg'
 import RecordIcon from '@/assets/icons/new-record.svg'
 import CategoriesIcon from '@/assets/icons/list.svg'
+import UserIcon from '@/assets/icons/user.svg'
 
 export default {
   data: () => ({
-    active: 'home'
+    active: 'home',
+    date: new Date(),
+    interval: null
   }),
 
-  components: { BalanceIcon, HistoryIcon, PlanningIcon, RecordIcon, CategoriesIcon }
+  components: { BalanceIcon, HistoryIcon, PlanningIcon, RecordIcon, CategoriesIcon, UserIcon },
+
+  methods: {
+    async logout() {
+      await this.$store.dispatch('logout')
+      this.$router.push('/login')
+    }
+  },
+
+  mounted() {
+    this.interval = setInterval(() => {
+      this.date = new Date()
+    }, 1000)
+  },
+
+  beforeDestroy() {
+    clearInterval(this.interval)
+  }
 }
 </script>
 
