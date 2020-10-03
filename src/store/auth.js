@@ -1,26 +1,22 @@
 import firebase from 'firebase/app'
-import auth from '@/api/auth'
+import { authApi } from '@/api'
 
 export default {
   actions: {
     async login({ commit }, { email, password }) {
       console.log('TODO: Add auth state persistence')
       try {
-        await auth.login(email, password)
+        await authApi.login(email, password)
       } catch (e) {
-        commit('setError', e.code)
+        commit('setAuthError', e.code)
       }
     },
 
-    async register({ dispatch, commit }, { email, password, name }) {
+    async register({ commit }, { email, password, name }) {
       try {
-        await auth.register(email, password)
-
-        const uid = await dispatch('getUid')
-
-        await auth.createUserInDB(uid, name, 10500)
+        await authApi.register(email, password, name, 10500)
       } catch (e) {
-        commit('setError', e.code)
+        commit('setAuthError', e.code)
       }
     },
 

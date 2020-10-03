@@ -1,18 +1,16 @@
 import firebase from 'firebase'
 
-export default {
-  signIn(email, password) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
+export const authApi = {
+  async login(email, password) {
+    await firebase.auth().signInWithEmailAndPassword(email, password)
   },
 
-  register(email, password) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-  },
+  async register(email, password, name, bill = 10000) {
+    const newUser = await firebase.auth().createUserWithEmailAndPassword(email, password)
 
-  createUserInDB(uid, name, bill = 10000) {
-    firebase
+    await firebase
       .database()
-      .ref(`/users/${uid}/info`)
+      .ref(`/users/${newUser.user.uid}/info`)
       .set({ name, bill })
   }
 }

@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import messages from '@/utils/messages'
+
 import ShadowBlock from '@/components/ShadowBlock'
 import LoginForm from '@/components/LoginForm'
 import RegisterForm from '@/components/RegisterForm'
@@ -18,11 +20,10 @@ export default {
 
   methods: {
     redirectToHome() {
-      if (!this.$store.getters.error) {
+      if (!this.$store.getters.authError) {
         this.$router.push('/')
       }
     },
-
     async loginHandler(data) {
       await this.$store.dispatch('login', data)
       this.redirectToHome()
@@ -30,6 +31,26 @@ export default {
     async registerHandler(data) {
       this.$store.dispatch('register', data)
       this.redirectToHome()
+    }
+  },
+
+  computed: {
+    error() {
+      return this.$store.getters.authError
+    }
+  },
+
+  watch: {
+    error(errorMessage) {
+      this.$vs.notification({
+        duration: 'none',
+        position: 'top-right',
+        flat: true,
+        border: 'danger',
+        color: 'danger',
+        title: 'Ошыбка авторизации',
+        text: messages[errorMessage] || 'Что-то пошло не по плану'
+      })
     }
   }
 }
@@ -49,7 +70,6 @@ export default {
 .auth-form__dialog
   margin: 16px auto 0
   font-size: 14px
-
 .auth-form
   min-width: 350px
   display: flex
@@ -63,8 +83,8 @@ export default {
   .vs-input__label
     font-size: 14px
 
-.auth-form__input input
-  width: 100%
+  .vs-input
+    width: 100%
 
 .auth-form__checkbox
   margin: 4px 0

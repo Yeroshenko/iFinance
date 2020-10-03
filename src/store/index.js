@@ -7,20 +7,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    error: null
+    authError: null
   },
 
   mutations: {
-    setError(state, error) {
-      state.error = error
+    setAuthError(state, error) {
+      state.authError = error
     },
-    clearError(state) {
-      state.error = null
+    clearAuthError(state) {
+      state.authError = null
     }
   },
 
   getters: {
-    error: state => state.error
+    authError: state => state.authError
   },
 
   modules: { auth }
