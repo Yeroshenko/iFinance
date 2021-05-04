@@ -8,6 +8,8 @@ import 'firebase/auth'
 import 'firebase/database'
 
 import dateFilter from '@/filters/dateFilter'
+import currencyFilter from '@/filters/currencyFilter'
+
 import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
@@ -23,6 +25,7 @@ Vue.use(Vuelidate) // Input validation
 Vue.config.productionTip = false
 
 Vue.filter('date', dateFilter)
+Vue.filter('currency', currencyFilter)
 
 firebase.initializeApp({
   apiKey: 'AIzaSyB8ACLdYLDoVGJCPsM4ELLkfySlfN1xTAg',

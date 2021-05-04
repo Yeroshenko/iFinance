@@ -6,7 +6,7 @@
           <vs-avatar>
             <img src="https://cutt.ly/5fJgjCc" alt="avatar" />
           </vs-avatar>
-          <div class="sidebar__username">Kate Kishchuk</div>
+          <div class="sidebar__username">{{ userName }}</div>
         </div>
       </template>
       <vs-sidebar-item id="home" class="sidebar__item" to="/">
@@ -59,7 +59,10 @@
         </div>
       </template>
     </vs-sidebar>
-    <router-view />
+
+    <div class="main-layout__page-wrapper">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -80,6 +83,12 @@ export default {
 
   components: { BalanceIcon, HistoryIcon, PlanningIcon, RecordIcon, CategoriesIcon, UserIcon },
 
+  computed: {
+    userName() {
+      return this.$store.getters.info.name
+    }
+  },
+
   methods: {
     async logout() {
       await this.$store.dispatch('logout')
@@ -87,10 +96,14 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
     this.interval = setInterval(() => {
       this.date = new Date()
     }, 1000)
+
+    if (!Object.keys(this.$store.getters.info).length) {
+      await this.$store.dispatch('fetchInfo')
+    }
   },
 
   beforeDestroy() {
@@ -127,4 +140,8 @@ export default {
   color: rgba(var(--vs-color), 1)
   padding: 10px 20px
   border-radius: 12px
+
+.main-layout__page-wrapper
+  padding: 20px 40px
+  min-height: 100vh
 </style>

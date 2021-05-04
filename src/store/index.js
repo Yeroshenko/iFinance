@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import auth from '@/store//auth'
+import auth from './auth'
+import info from './info'
+import bill from './bill'
 
 Vue.use(Vuex)
 
@@ -23,5 +25,5 @@ export default new Vuex.Store({
     authError: state => state.authError
   },
 
-  modules: { auth }
+  modules: { auth, info, bill }
 })

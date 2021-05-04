@@ -1,4 +1,3 @@
-import firebase from 'firebase/app'
 import { authApi } from '@/api'
 
 export default {
@@ -21,13 +20,14 @@ export default {
     },
 
     getUid() {
-      const user = firebase.auth().currentUser
+      const user = authApi.getCurrentUser()
 
       return user ? user.uid : null
     },
 
-    async logout() {
-      await firebase.auth().signOut()
+    async logout({ commit }) {
+      await authApi.logout()
+      commit('clearInfo')
     }
   }
 }

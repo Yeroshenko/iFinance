@@ -12,5 +12,13 @@ export const authApi = {
       .database()
       .ref(`/users/${newUser.user.uid}/info`)
       .set({ name, bill })
+  },
+
+  async logout() {
+    await firebase.auth().signOut()
+  },
+
+  getCurrentUser() {
+    return firebase.auth().currentUser
   }
 }
